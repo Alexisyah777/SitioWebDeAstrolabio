@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600&family=Press+Start+2P&family=Rye&family=Silkscreen:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap');
 @import 'tailwindcss';
 
 /* Paleta ASTROLABIO — tokens exactos */
@@ -29,7 +29,7 @@
   --font-logo: 'Press Start 2P', monospace;
   --font-label: 'Silkscreen', monospace;
   --font-body: 'Pixelify Sans', system-ui, sans-serif;
-  --font-display: 'Rye', Georgia, serif;
+  --font-display: 'Pixelify Sans', monospace;
 }
 
 @layer base {
@@ -44,7 +44,7 @@
   }
   body {
     background: var(--bg);
-    color: var(--cream-200);
+    color: var(--blanco);
     font-family: var(--font-body);
     font-size: 1.0625rem;
     line-height: 1.6;
@@ -86,9 +86,12 @@
     font-family: var(--font-display);
     text-transform: uppercase;
     color: var(--terracotta-500);
+    font-weight: 700;
+    letter-spacing: 0.01em;
     line-height: 1.02;
     text-shadow: 3px 3px 0 var(--negro);
   }
+  .font-display { font-weight: 700; }
   .panel {
     background: var(--obsidian-900);
     border: 1px solid var(--slate-700);
@@ -174,9 +177,6 @@
     vertical-align: -0.04em;
     animation: blink 1s steps(1) infinite;
   }
-  .sprite-strip { display: flex; width: 300%; height: 100%; }
-  .group:hover .sprite-strip,
-  .group:focus-within .sprite-strip { animation: sprite 0.5s steps(3) infinite; }
   .px-block { opacity: 0; animation: pixel-in 0.01s steps(1) forwards; }
   .menu-stripe { animation: stripe-in 0.35s steps(5) both; }
   .fade-steps { animation: fade-steps 0.4s steps(4) both; }
@@ -186,7 +186,6 @@
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
 @keyframes blink { 50% { opacity: 0; } }
-@keyframes sprite { from { transform: translateX(0); } to { transform: translateX(-100%); } }
 @keyframes pixel-in { to { opacity: 1; } }
 @keyframes stripe-in { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: none; } }
 @keyframes fade-steps { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }

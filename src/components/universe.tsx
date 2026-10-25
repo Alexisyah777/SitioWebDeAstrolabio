@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { CHARACTERS, COLLECTIONS, CREDITS, HOUSES, MECHANICS, SECTIONS, SOCIALS, type House } from '../content'
 import { prefersReducedMotion, scrollToId } from '../lib'
-import { Corners, MediaSlot, Pix, Reveal, SectionHeader } from './ui'
+import { MediaSlot, Pix, Reveal, SectionHeader } from './ui'
 
 const OCTAGON = '30,4 70,4 70,10 82,10 82,18 90,18 90,30 96,30 96,70 90,70 90,82 82,82 82,90 70,90 70,96 30,96 30,90 18,90 18,82 10,82 10,70 4,70 4,30 10,30 10,18 18,18 18,10 30,10'
 
@@ -123,7 +123,7 @@ function HouseCard({ h }: { h: House }) {
         <div className="mt-6 flex aspect-video w-full items-center justify-center border border-dashed border-slate-700 bg-bg">
           <Pix name="lock" className="size-12 text-muted-purple-600" />
         </div>
-        <p className="mt-5 text-cream-200/90">Esta Casa permanece sellada. Sus habitaciones se revelarán cuando el Gran Reloj lo permita. Cada secreto, a su tiempo.</p>
+        <p className="mt-5 text-white">Esta Casa permanece sellada. Sus habitaciones se revelarán cuando el Gran Reloj lo permita. Cada secreto, a su tiempo.</p>
       </div>
     )
   return (
@@ -199,7 +199,7 @@ export function Characters() {
                   <p className="label-px text-[0.625rem] text-sand-300">Personaje 0{i + 1}</p>
                   <MediaSlot ratio="3/4" label="Ilustración del personaje" alt={`Retrato de ${c.name}`} className="mt-3" />
                   <h3 className="mt-5 font-display text-2xl uppercase text-terracotta-500 md:text-3xl">{c.name}</h3>
-                  <p className="mt-2 flex-1 text-cream-200/90">{c.short}</p>
+                  <p className="mt-2 flex-1 text-white">{c.short}</p>
                   <button type="button" aria-haspopup="dialog" onClick={() => setOpenIdx(i)} className="label-px mt-5 flex items-center justify-between border-t border-slate-700 pt-4 text-[0.6875rem] text-ambar-400 hover:text-sand-300">
                     <span>
                       Ver más <span className="sr-only">sobre {c.name}</span>
@@ -258,8 +258,8 @@ function CharacterModal({ index, onClose }: { index: number; onClose: () => void
           <h3 id="modal-title" className="title-display mt-3 text-4xl">
             {c.name}
           </h3>
-          <p className="mt-4 text-lg text-sand-300">{c.short}</p>
-          <p className="mt-4 text-cream-200/90">{c.long}</p>
+          <p className="mt-4 text-lg text-white">{c.short}</p>
+          <p className="mt-4 text-white">{c.long}</p>
           <p className="label-px mt-6 text-[0.5625rem] text-cream-200/60">Texto provisional · Registro en revisión</p>
         </div>
       </div>
@@ -276,25 +276,15 @@ export function Mechanics() {
           {MECHANICS.map((m, i) => (
             <li key={m.name}>
               <Reveal delay={i} className="h-full">
-                <article tabIndex={0} className="panel group flex h-full gap-5 p-5 transition-colors hover:bg-slate-800 focus-visible:bg-slate-800 md:p-6">
-                  <div role="img" aria-label={`Ícono de ${m.name}. Recurso oficial pendiente.`} className="relative aspect-square w-20 shrink-0 border border-slate-700 bg-bg md:w-24">
-                    <div className="absolute inset-0 m-auto size-[52%] overflow-hidden">
-                      <div className="sprite-strip">
-                        {m.frames.map(([dx, dy], f) => (
-                          <div key={f} className="flex h-full w-1/3 items-center justify-center">
-                            <Pix name={m.icon} className="size-full text-terracotta-500" style={{ transform: `translate(${dx}%, ${dy}%)` }} />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <Corners className="text-slate-700 [&_.corner]:size-2 [&_.corner-br]:bottom-1 [&_.corner-br]:right-1 [&_.corner-tl]:left-1 [&_.corner-tl]:top-1" />
-                  </div>
+                <article className="panel flex h-full gap-5 p-5 md:p-6">
+                  {/* Espacio reservado (en blanco) para el recurso visual de la mecánica */}
+                  <div aria-hidden="true" className="aspect-square w-20 shrink-0 border border-slate-700 bg-bg md:w-24" />
                   <div>
                     <h3 className="flex items-baseline gap-3">
                       <span className="font-display text-2xl uppercase text-terracotta-500 md:text-3xl">{m.name}</span>
                       <span className="label-px text-[0.625rem] text-sand-300">{m.num}</span>
                     </h3>
-                    <p className="mt-2 text-cream-200/90">{m.desc}</p>
+                    <p className="mt-2 text-white">{m.desc}</p>
                     <span className="chip label-px mt-4 !text-[0.625rem]">{m.chip}</span>
                   </div>
                 </article>
@@ -349,7 +339,7 @@ export function Archives() {
                       <div className="overflow-hidden">
                         <div className="border-t border-slate-700 p-4 md:p-6">
                           {c.placeholder && <MediaSlot ratio="16/9" label={c.placeholder} className="mb-5 max-w-xl" />}
-                          <p className="text-cream-200/90">Espacio preparado para los registros oficiales de esta colección.</p>
+                          <p className="text-white">Espacio preparado para los registros oficiales de esta colección.</p>
                         </div>
                       </div>
                     </div>
@@ -408,7 +398,7 @@ export function Footer() {
               </li>
             ))}
           </ul>
-          <p className="mt-6 text-sm text-cream-200/80">{CREDITS}</p>
+          <p className="mt-6 text-sm text-white">{CREDITS}</p>
         </div>
       </div>
       <div className="wrap label-px mt-14 flex flex-wrap justify-between gap-3 border-t border-slate-700 pt-6 text-[0.5625rem] text-cream-200/65">

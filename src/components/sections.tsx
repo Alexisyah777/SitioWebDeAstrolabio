@@ -39,7 +39,7 @@ export function Hero({ ready }: { ready: boolean }) {
               </span>
             </span>
           </h1>
-          <p className="mt-6 max-w-xl text-lg text-sand-300 md:text-xl">{HERO.subtitle}</p>
+          <p className="mt-6 max-w-xl text-lg text-white md:text-xl">{HERO.subtitle}</p>
           <div className="mt-9 flex flex-wrap gap-4">
             <button type="button" className="btn btn-primary" onClick={playTrailer}>
               <Pix name="play" className="h-3 w-2" />
@@ -94,7 +94,7 @@ export function About() {
           <SectionHeader label="Registro 00 · Expediente" title="Qué es Astrolabio" titleId="que-es-title" />
           {ABOUT.body.map((p, i) => (
             <Reveal key={i} delay={i + 2}>
-              <p className="mt-5 max-w-xl text-lg text-cream-200/90">{p}</p>
+              <p className="mt-5 max-w-xl text-lg text-white">{p}</p>
             </Reveal>
           ))}
         </div>
@@ -137,7 +137,7 @@ export function Story() {
                 <Reveal delay={1} className={i % 2 ? 'md:order-1' : ''}>
                   <p className="label-px text-ambar-400">Capítulo 0{i + 1}</p>
                   <h3 className="mt-3 font-display text-3xl uppercase text-sand-300 md:text-4xl">{c.title}</h3>
-                  <p className="mt-4 max-w-md text-lg text-cream-200/90 md:text-xl">{c.text}</p>
+                  <p className="mt-4 max-w-md text-lg text-white md:text-xl">{c.text}</p>
                 </Reveal>
               </li>
             ))}
@@ -214,7 +214,7 @@ export function Trailer() {
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-6 text-center">
                   <Pix name="clock" className="size-10 text-ambar-400" />
                   <p className="label-px text-ambar-400">Señal pendiente</p>
-                  <p className="max-w-md text-cream-200/90">El tráiler oficial se transmitirá aquí muy pronto.</p>
+                  <p className="max-w-md text-white">El tráiler oficial se transmitirá aquí muy pronto.</p>
                   <button type="button" className="btn btn-ghost" onClick={() => setPlaying(false)}>
                     Volver
                   </button>

@@ -135,11 +135,11 @@ export const CHARACTERS = [
   },
 ]
 
-export const MECHANICS: { name: string; num: string; desc: string; chip: string; icon: IconName; frames: [number, number][] }[] = [
-  { name: 'Salto', num: '01', desc: 'Movimiento básico.', chip: 'Movimiento', icon: 'automaton', frames: [[0, 0], [0, -14], [0, -7]] },
-  { name: 'Ancla', num: '02', desc: 'Fija un punto temporal durante aproximadamente 6 segundos.', chip: '6 segundos', icon: 'anchor', frames: [[0, 0], [0, 8], [0, 4]] },
-  { name: 'Gancho', num: '03', desc: 'Tiene 2 usos y se recarga al tocar suelo firme.', chip: '2 usos', icon: 'hook', frames: [[0, 0], [7, -7], [14, -14]] },
-  { name: 'Escalar', num: '04', desc: 'Permite subir superficies determinadas durante aproximadamente 3 segundos.', chip: '3 segundos', icon: 'ladder', frames: [[0, 0], [0, -9], [0, -18]] },
+export const MECHANICS: { name: string; num: string; desc: string; chip: string }[] = [
+  { name: 'Salto', num: '01', desc: 'Movimiento básico.', chip: 'Movimiento' },
+  { name: 'Ancla', num: '02', desc: 'Fija un punto temporal durante aproximadamente 6 segundos.', chip: '6 segundos' },
+  { name: 'Gancho', num: '03', desc: 'Tiene 2 usos y se recarga al tocar suelo firme.', chip: '2 usos' },
+  { name: 'Escalar', num: '04', desc: 'Permite subir superficies determinadas durante aproximadamente 3 segundos.', chip: '3 segundos' },
 ]
 
 export const COLLECTIONS: { title: string; icon: IconName; placeholder?: string }[] = [

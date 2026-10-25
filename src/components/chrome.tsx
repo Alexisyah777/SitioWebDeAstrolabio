@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useRef, useState, type CSSProperties, type MouseEvent } from 'react'
+import { useEffect, useMemo, useRef, useState, type MouseEvent } from 'react'
 import { SECTIONS } from '../content'
 import { playTrailer, prefersReducedMotion, scrollToId, seeded } from '../lib'
-import { Astrolabe, MediaSlot, Pix, type IconName } from './ui'
+import { Astrolabe, MediaSlot, Pix } from './ui'
 
 export function Starfield() {
   const layers = useMemo(() => {
@@ -163,14 +163,6 @@ export function Navbar({ menuOpen, onMenu }: { menuOpen: boolean; onMenu: () => 
   )
 }
 
-const SPRITES: { icon: IconName; style: CSSProperties; depth: number; dur: number }[] = [
-  { icon: 'hourglass', style: { top: '16%', right: '7%' }, depth: 18, dur: 1.4 },
-  { icon: 'gear', style: { top: '40%', right: '3%' }, depth: 32, dur: 1.9 },
-  { icon: 'star', style: { top: '64%', right: '11%' }, depth: 12, dur: 1.1 },
-  { icon: 'scroll', style: { bottom: '7%', right: '26%' }, depth: 26, dur: 1.7 },
-  { icon: 'map', style: { top: '26%', right: '24%' }, depth: 16, dur: 2.1 },
-]
-
 export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => void }) {
   const rootRef = useRef<HTMLDivElement>(null)
   const closeRef = useRef(onClose)
@@ -225,12 +217,6 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
       aria-modal="true"
       aria-label="Menú de secciones"
       className="fixed inset-0 z-50"
-      onMouseMove={(e) => {
-        const el = rootRef.current
-        if (!el) return
-        el.style.setProperty('--mx', String((e.clientX / innerWidth) * 2 - 1))
-        el.style.setProperty('--my', String((e.clientY / innerHeight) * 2 - 1))
-      }}
     >
       <div aria-hidden="true" className="absolute inset-0 grid grid-cols-12 grid-rows-8">
         {blocks.map((d, i) => (
@@ -270,18 +256,6 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
           </ul>
         </nav>
       </div>
-      {SPRITES.map((sp) => (
-        <div
-          key={sp.icon}
-          aria-hidden="true"
-          className="pointer-events-none absolute z-10 hidden transition-transform duration-300 ease-out md:block"
-          style={{ ...sp.style, transform: `translate(calc(var(--mx, 0) * ${sp.depth}px), calc(var(--my, 0) * ${sp.depth}px))` }}
-        >
-          <span className="bob block [filter:drop-shadow(2px_2px_0_#000)]" style={{ animationDuration: `${sp.dur}s` }}>
-            <Pix name={sp.icon} className="size-9 text-sand-300 lg:size-11" />
-          </span>
-        </div>
-      ))}
     </div>
   )
 }
