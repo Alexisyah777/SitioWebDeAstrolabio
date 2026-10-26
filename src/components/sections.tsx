@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { ABOUT, HERO, STORY, TRAILER_MP4, TRAILER_URL } from '../content'
+import { useApi, type SeccionHistoria } from '../api'
+import { ABOUT, HERO, TRAILER_MP4, TRAILER_URL } from '../content'
 import { parseYouTubeId, PLAY_EVENT, playTrailer, prefersReducedMotion, scrollToId } from '../lib'
-import { Astrolabe, Corners, MediaSlot, Pix, Reveal, SectionHeader } from './ui'
+import { Astrolabe, Corners, EstadoCarga, MediaSlot, Pix, Reveal, SectionHeader } from './ui'
 
 export function Hero({ ready }: { ready: boolean }) {
   const full = HERO.title
@@ -121,28 +122,44 @@ export function About() {
 }
 
 export function Story() {
+  const { datos: secciones, error, reintentar } = useApi<SeccionHistoria[]>('/historia')
   return (
     <section id="historia" aria-labelledby="historia-title" className="relative py-24 md:py-32">
       <div className="wrap">
         <SectionHeader label="Registro 01 · Sinopsis" title="Historia" titleId="historia-title" subtitle="El origen del Gran Reloj, contado a su tiempo." />
-        <div className="relative mt-16 md:mt-24">
-          <span aria-hidden="true" className="absolute left-1/2 top-0 hidden h-full -translate-x-1/2 border-l border-dashed border-slate-700 md:block" />
-          <ol className="space-y-20 md:space-y-32">
-            {STORY.map((c, i) => (
-              <li key={c.title} className="relative grid items-center gap-8 md:grid-cols-2 md:gap-20">
-                <span aria-hidden="true" className="absolute left-1/2 top-1/2 hidden size-3 -translate-x-1/2 -translate-y-1/2 rotate-45 border-2 border-ambar-400 bg-bg md:block" />
-                <Reveal className={i % 2 ? 'md:order-2' : ''}>
-                  <MediaSlot ratio="4/3" label={c.image} alt={`Ilustración: ${c.image}`} className="shadow-[6px_6px_0_#000]" />
-                </Reveal>
-                <Reveal delay={1} className={i % 2 ? 'md:order-1' : ''}>
-                  <p className="label-px text-ambar-400">Capítulo 0{i + 1}</p>
-                  <h3 className="mt-3 font-display text-3xl uppercase text-sand-300 md:text-4xl">{c.title}</h3>
-                  <p className="mt-4 max-w-md text-lg text-white md:text-xl">{c.text}</p>
-                </Reveal>
-              </li>
-            ))}
-          </ol>
-        </div>
+        {!secciones ? (
+          <EstadoCarga error={error} onReintentar={reintentar} className="mt-16 md:mt-24" />
+        ) : (
+          <div className="relative mt-16 md:mt-24">
+            <span aria-hidden="true" className="absolute left-1/2 top-0 hidden h-full -translate-x-1/2 border-l border-dashed border-slate-700 md:block" />
+            <ol className="space-y-20 md:space-y-32">
+              {secciones.map((s, i) => {
+                const imagen = s.entradas.find((e) => e.imagenUrl)?.imagenUrl ?? undefined
+                return (
+                  <li key={s.slug} className="relative grid items-center gap-8 md:grid-cols-2 md:gap-20">
+                    <span aria-hidden="true" className="absolute left-1/2 top-1/2 hidden size-3 -translate-x-1/2 -translate-y-1/2 rotate-45 border-2 border-ambar-400 bg-bg md:block" />
+                    <Reveal className={i % 2 ? 'md:order-2' : ''}>
+                      <MediaSlot ratio="4/3" label={s.titulo} src={imagen} alt={`Ilustración: ${s.titulo}`} className="shadow-[6px_6px_0_#000]" />
+                    </Reveal>
+                    <Reveal delay={1} className={i % 2 ? 'md:order-1' : ''}>
+                      <p className="label-px text-ambar-400">Capítulo {String(i + 1).padStart(2, '0')}</p>
+                      <h3 className="mt-3 font-display text-3xl uppercase text-sand-300 md:text-4xl">{s.titulo}</h3>
+                      <div className="mt-4 max-w-md space-y-5">
+                        {s.entradas.map((e) => (
+                          <div key={e.slug}>
+                            {/* Si la sección tiene una sola entrada con su mismo nombre, no se repite el título */}
+                            {(s.entradas.length > 1 || e.titulo !== s.titulo) && <h4 className="label-px text-[0.6875rem] text-cream-200">{e.titulo}</h4>}
+                            <p className="mt-2 text-lg text-white">{e.contenido}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </Reveal>
+                  </li>
+                )
+              })}
+            </ol>
+          </div>
+        )}
         <Reveal className="mt-24 text-center md:mt-36">
           <Pix name="star" className="mx-auto size-5 text-ambar-400" />
           <blockquote className="mx-auto mt-6 max-w-3xl font-display uppercase leading-tight text-sand-300 [text-shadow:3px_3px_0_#000]" style={{ fontSize: 'clamp(2rem, 5vw, 3.75rem)' }}>
