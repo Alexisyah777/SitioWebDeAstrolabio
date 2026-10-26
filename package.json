@@ -1,13 +1,16 @@
 {
-  "name": "figma-make-app",
+  "name": "astrolabio-sitio-web",
+  "description": "Sitio web informativo (PWA) del videojuego Astrolabio.",
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "format": "oxfmt"
+    "preview": "vite preview"
+  },
+  "engines": {
+    "node": ">=22"
   },
   "dependencies": {
     "react": "^19.0.0",
@@ -19,7 +22,6 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^6.0.0",
-    "oxfmt": "^0.2.0",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.7.0",
     "vite": "^8.0.5",

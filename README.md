@@ -32,11 +32,11 @@ Para el navegador, el sitio y la API están en el mismo dominio.
 
 ## Desarrollo
 
-Requisitos: Node.js 22 o más reciente y pnpm (versiones en [`.mise.toml`](.mise.toml)).
+Requisitos: Node.js 22 o más reciente (incluye npm).
 
 ```bash
-pnpm install
-pnpm dev
+npm install
+npm run dev
 ```
 
 Abre `http://localhost:8443`. Por defecto usa la API publicada.
@@ -44,14 +44,21 @@ Abre `http://localhost:8443`. Por defecto usa la API publicada.
 Para usar la API en tu computadora (corriendo con `npm run dev` en el repositorio de la API):
 
 ```bash
-API_URL=http://localhost:3000 pnpm dev
+API_URL=http://localhost:3000 npm run dev
+```
+
+En PowerShell:
+
+```powershell
+$env:API_URL="http://localhost:3000"; npm run dev
 ```
 
 | Comando | Para qué |
 |---|---|
-| `pnpm dev` | Servidor de desarrollo, con recarga al guardar. El *service worker* no se activa aquí. |
-| `pnpm build` | Compila en `dist/`, con el manifest y el *service worker*. |
-| `pnpm preview` | Sirve `dist/` como en producción, para probar la PWA y el modo sin conexión. |
+| `npm run dev` | Servidor de desarrollo, con recarga al guardar. El *service worker* no se activa aquí. |
+| `npm run dev -- --host` | Igual, pero visible en tu red local (para abrirlo desde el celular). |
+| `npm run build` | Compila en `dist/`, con el manifest y el *service worker*. |
+| `npm run preview` | Sirve `dist/` como en producción, para probar la PWA y el modo sin conexión. |
 | `node scripts/generar-iconos.mjs` | Vuelve a generar los íconos y el favicon en `public/`. |
 
 ## PWA y modo sin conexión
@@ -73,4 +80,4 @@ La primera visita después de un rato puede tardar unos segundos: Vercel "despie
 
 Para comprobar, abre `https://<tu-dominio>/api/v1/salud`. Debe responder `{"data":{"estado":"ok","baseDeDatos":"ok"}}` a través del rewrite.
 
-> `.figma/make/site.json` tiene `"robots": { "index": false }`, así que el sitio les pide a los buscadores que no lo indexen. Cámbialo a `true` cuando quieran que aparezca en Google.
+> [`index.html`](index.html) tiene `<meta name="robots" content="noindex, nofollow">`, así que el sitio les pide a los buscadores que no lo indexen. Quítala cuando quieran que aparezca en Google.
