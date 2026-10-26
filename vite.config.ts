@@ -12,6 +12,12 @@ export default defineConfig(({ mode }) => {
   // .figma/make/deploy-preview passes `--mode development` for cached-preview builds.
   const emitSourcemaps = mode === 'development'
 
+  // En local, /api/* se reenvía a la API, igual que el rewrite de vercel.json en producción.
+  // Para usar la API local: API_URL=http://localhost:3000 pnpm dev
+  const proxyApi = {
+    '/api': { target: process.env.API_URL || 'https://astrolabio-api.vercel.app', changeOrigin: true },
+  }
+
   return {
     base: process.env.FIGMA_PUBLIC_URL ? `${process.env.FIGMA_PUBLIC_URL}/` : '/',
     build: {
@@ -41,10 +47,12 @@ react(),
           '**/.figma/**',
 ],
       },
+      proxy: proxyApi,
     },
     preview: {
       host: process.env.FIGMA_DEV_SERVER_HOST || '0.0.0.0',
       port: parseInt(process.env.PORT || '8443'),
+      proxy: proxyApi,
     },
   }
 })
