@@ -155,6 +155,68 @@ export function SectionHeader({ label, title, titleId, subtitle }: { label: stri
   )
 }
 
+/** Mientras llega una respuesta de la API, o si falló, con un botón para reintentar. */
+export function EstadoCarga({ error, onReintentar, className = '' }: { error?: string; onReintentar: () => void; className?: string }) {
+  if (error)
+    return (
+      <div role="alert" className={`panel flex flex-col items-start gap-4 p-5 md:p-6 ${className}`}>
+        <p className="label-px flex items-center gap-3 text-[0.625rem] text-ambar-400">
+          <Pix name="clock" className="size-4" />
+          Señal interrumpida
+        </p>
+        <p className="text-white">{error} Revisa tu conexión e inténtalo de nuevo.</p>
+        <button type="button" className="btn btn-ghost" onClick={onReintentar}>
+          Reintentar
+        </button>
+      </div>
+    )
+  return (
+    <div role="status" className={`panel flex items-center gap-4 p-5 md:p-6 ${className}`}>
+      <Pix name="gear" className="spin-steps size-6 shrink-0 text-terracotta-500" />
+      <p className="label-px text-[0.625rem] text-sand-300">Consultando el Gran Reloj…</p>
+    </div>
+  )
+}
+
+/** Ventana modal: atrapa el foco, se cierra con Escape o al tocar fuera y devuelve el foco al salir. */
+export function Dialogo({ tituloId, onClose, className = '', children }: { tituloId: string; onClose: () => void; className?: string; children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const closeRef = useRef(onClose)
+  closeRef.current = onClose
+  useEffect(() => {
+    const prev = document.activeElement as HTMLElement | null
+    ref.current?.focus()
+    document.body.style.overflow = 'hidden'
+    const k = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeRef.current()
+    }
+    addEventListener('keydown', k)
+    return () => {
+      removeEventListener('keydown', k)
+      document.body.style.overflow = ''
+      prev?.focus({ preventScroll: true })
+    }
+  }, [])
+  return (
+    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/75 p-4" onClick={onClose}>
+      <div
+        ref={ref}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={tituloId}
+        tabIndex={-1}
+        onClick={(e) => e.stopPropagation()}
+        className={`panel fade-steps relative max-h-[90svh] w-full overflow-y-auto p-5 outline-none md:p-8 ${className}`}
+      >
+        <button type="button" className="btn btn-ghost absolute right-3 top-3 z-10 !px-3" aria-label="Cerrar" onClick={onClose}>
+          <Pix name="close" className="size-3.5" />
+        </button>
+        {children}
+      </div>
+    </div>
+  )
+}
+
 /** Astrolabio / engranaje decorativo. */
 export function Astrolabe({ className = '' }: { className?: string }) {
   const teeth = 36
