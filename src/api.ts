@@ -27,7 +27,7 @@ async function pedir<T>(ruta: string): Promise<T> {
   try {
     const res = await fetch(BASE + ruta, { signal: control.signal, headers: { Accept: 'application/json' } })
     const cuerpo = await res.json().catch(() => null)
-    if (!res.ok) throw new ErrorApi(cuerpo?.error?.mensaje ?? `El Gran Reloj respondió ${res.status}.`, res.status)
+    if (!res.ok) throw new ErrorApi(cuerpo?.error?.mensaje ?? 'El Gran Reloj no responde por ahora.', res.status)
     if (!cuerpo || !('data' in cuerpo)) throw new ErrorApi('El Gran Reloj respondió algo inesperado.', res.status)
     return cuerpo.data as T
   } catch (error) {
