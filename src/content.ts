@@ -10,7 +10,7 @@ import type { IconName } from './components/ui'
  * ───────────────────────────────────────────── */
 
 /** Pega aquí la URL del tráiler de YouTube (watch?v=, youtu.be/ o /embed/). */
-export const TRAILER_URL = ''
+export const TRAILER_URL = 'https://youtu.be/TI5FMhjHhbU'
 /** Respaldo opcional si no hay YouTube: ruta a un .mp4 (ej. '/trailer.mp4' dentro de /public). */
 export const TRAILER_MP4 = ''
 

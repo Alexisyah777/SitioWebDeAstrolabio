@@ -149,8 +149,8 @@ export function Navbar({ menuOpen, onMenu }: { menuOpen: boolean; onMenu: () => 
           ASTROLABIO
         </a>
         <div className="flex items-center gap-3">
-          <button type="button" className="btn btn-primary hidden sm:inline-flex" onClick={playTrailer}>
-            <Pix name="play" className="h-3 w-2" />
+          <button type="button" className="btn btn-primary !px-2 !py-1.5 !text-[0.6rem] sm:!px-4 sm:!py-3 sm:!text-xs" onClick={playTrailer}>
+            <Pix name="play" className="h-2.5 w-1.5 sm:h-3.5 sm:w-2.5" />
             Ver tráiler
           </button>
           <button type="button" className="btn btn-ghost" aria-expanded={menuOpen} aria-controls="menu-overlay" onClick={onMenu}>
@@ -176,7 +176,7 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
     if (!open) return
     const prev = document.activeElement as HTMLElement | null
     document.body.style.overflow = 'hidden'
-    const t = setTimeout(() => rootRef.current?.querySelector<HTMLElement>('[data-autofocus]')?.focus(), 380)
+    const t = setTimeout(() => rootRef.current?.querySelector<HTMLElement>('button[aria-label="Cerrar menú"]')?.focus(), 380)
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') closeRef.current()
       if (e.key === 'Tab' && rootRef.current) {
@@ -216,37 +216,36 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
       role="dialog"
       aria-modal="true"
       aria-label="Menú de secciones"
-      className="fixed inset-0 z-50"
+      className="fixed inset-0 z-50 bg-bg"
     >
+      {/* Bloques pixel-wipe decorativos sobre fondo sólido */}
       <div aria-hidden="true" className="absolute inset-0 grid grid-cols-12 grid-rows-8">
         {blocks.map((d, i) => (
-          <span key={i} className="px-block bg-bg" style={{ animationDelay: `${d}ms` }} />
+          <span key={i} className="px-block" style={{ animationDelay: `${d}ms` }} />
         ))}
       </div>
-      <div className="fade-steps absolute inset-0 flex flex-col" style={{ animationDelay: '340ms' }}>
-        <div className="flex items-center justify-between gap-4 px-5 py-4 md:px-10 md:py-5">
+      <div className="fade-steps absolute inset-0 flex h-[100dvh] w-full flex-col" style={{ animationDelay: '340ms' }}>
+        <div className="flex items-center justify-between gap-4 border-b border-slate-700 bg-obsidian-900 px-5 py-4 md:px-10 md:py-5">
           <span className="logo text-sm md:text-xl">ASTROLABIO</span>
-          <span className="label-px hidden text-[0.625rem] text-sand-300 md:block">Índice del Gran Reloj · 07 secciones</span>
           <button type="button" className="btn btn-ghost !px-3" aria-label="Cerrar menú" onClick={onClose}>
             <Pix name="close" className="size-4" />
           </button>
         </div>
-        <nav aria-label="Secciones" className="flex min-h-0 flex-1 flex-col">
-          <ul className="flex min-h-0 flex-1 flex-col">
+        <nav aria-label="Secciones" className="flex min-h-0 flex-1 flex-col overflow-y-auto">
+          <ul className="flex min-h-full flex-1 flex-col">
             {SECTIONS.map((s, i) => (
-              <li key={s.id} className="menu-stripe flex min-h-0 flex-1" style={{ animationDelay: `${380 + i * 45}ms` }}>
+              <li key={s.id} className="menu-stripe flex min-h-[50px] flex-1" style={{ animationDelay: `${380 + i * 45}ms` }}>
                 <a
                   href={`#${s.id}`}
                   onClick={go(s.id)}
-                  data-autofocus={i === 0 ? '' : undefined}
                   className={`group flex w-full items-center gap-4 overflow-hidden border-t border-slate-700 px-5 transition-colors duration-150 hover:bg-ambar-400 focus-visible:bg-ambar-400 focus-visible:outline-none md:gap-8 md:px-10 ${
                     i % 2 === 0 ? 'bg-obsidian-900' : 'bg-bg'
                   }`}
                 >
-                  <span className="label-px w-8 shrink-0 text-[0.625rem] text-sand-300 group-hover:text-bg group-focus-visible:text-bg">0{i + 1}</span>
+                  <span className="label-px w-10 shrink-0 text-[0.875rem] text-sand-300 group-hover:text-bg group-focus-visible:text-bg md:text-[1.1rem]">0{i + 1}</span>
                   <span
                     className="font-display uppercase leading-none text-terracotta-500 transition-transform duration-200 [transition-timing-function:steps(4)] group-hover:translate-x-4 group-hover:text-bg group-focus-visible:translate-x-4 group-focus-visible:text-bg md:group-hover:translate-x-10"
-                    style={{ fontSize: 'clamp(1.6rem, min(9vw, 8vh), 6.5rem)' }}
+                    style={{ fontSize: 'clamp(1.4rem, min(7vw, 5.5vh), 5rem)' }}
                   >
                     {s.label}
                   </span>
