@@ -18,7 +18,6 @@ export const SECTIONS = [
   { id: 'inicio', label: 'Inicio' },
   { id: 'historia', label: 'Historia' },
   { id: 'trailer', label: 'Tráiler' },
-  { id: 'mundo', label: 'Mundo' },
   { id: 'personajes', label: 'Personajes' },
   { id: 'mecanicas', label: 'Mecánicas' },
   { id: 'archivos', label: 'Archivos' },

@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 import { ClockIndicator, Loader, MenuOverlay, Navbar, Starfield } from './components/chrome'
 import { About, Hero, Story, Trailer } from './components/sections'
-import { Archives, Characters, Footer, Mechanics, World } from './components/universe'
+import { Archives, Characters, Footer, Mechanics } from './components/universe'
 
 export default function App() {
   const [loaded, setLoaded] = useState(false)
@@ -24,7 +24,6 @@ export default function App() {
           <About />
           <Story />
           <Trailer />
-          <World />
           <Characters />
           <Mechanics />
           <Archives />
