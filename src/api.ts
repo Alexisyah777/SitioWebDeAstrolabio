@@ -94,7 +94,8 @@ export function useApi<T>(ruta: string | null) {
 export type Referencia = { slug: string; nombre: string }
 
 export type EntradaHistoria = { slug: string; titulo: string; contenido: string | null; imagenUrl: string | null }
-export type SeccionHistoria = { slug: string; titulo: string; entradas: EntradaHistoria[] }
+/** `imagenUrl` es la ilustración del capítulo; las versiones anteriores de la API no la envían. */
+export type SeccionHistoria = { slug: string; titulo: string; imagenUrl?: string | null; entradas: EntradaHistoria[] }
 
 export type TipoZona = 'eje' | 'casa' | 'cierre'
 

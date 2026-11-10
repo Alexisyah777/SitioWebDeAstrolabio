@@ -63,7 +63,14 @@ export function Hero({ ready }: { ready: boolean }) {
             <Astrolabe className="spin-slow w-full" />
           </div>
           <div className="relative shadow-[8px_8px_0_#000]">
-            <MediaSlot ratio="16/9" label="Key art" alt="Key art de ASTROLABIO" />
+            <MediaSlot
+              ratio="16/9"
+              label="Key art"
+              src="/key-art.jpg"
+              alt="El Almanaque XII, de espaldas y con su capa estrellada, levanta una estrella frente a la torre del Gran Reloj, que flota en el cielo nocturno."
+              suave
+              prioritaria
+            />
           </div>
           <p className="label-px relative mt-4 flex justify-between text-[0.5625rem] text-cream-200/65">
             <span>Fig. 01 — Key art</span>
@@ -134,7 +141,8 @@ export function Story() {
             <span aria-hidden="true" className="absolute left-1/2 top-0 hidden h-full -translate-x-1/2 border-l border-dashed border-slate-700 md:block" />
             <ol className="space-y-20 md:space-y-32">
               {secciones.map((s, i) => {
-                const imagen = s.entradas.find((e) => e.imagenUrl)?.imagenUrl ?? undefined
+                // La ilustración del capítulo; si la API aún no la envía, la de la primera entrada que tenga una.
+                const imagen = s.imagenUrl ?? s.entradas.find((e) => e.imagenUrl)?.imagenUrl ?? undefined
                 return (
                   <li key={s.slug} className="relative grid items-center gap-8 md:grid-cols-2 md:gap-20">
                     <span aria-hidden="true" className="absolute left-1/2 top-1/2 hidden size-3 -translate-x-1/2 -translate-y-1/2 rotate-45 border-2 border-ambar-400 bg-bg md:block" />
