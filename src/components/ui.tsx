@@ -66,6 +66,11 @@ type Ratio = '16/9' | '4/3' | '1/1' | '3/4'
 /**
  * Espacio reservado para imagen. Para usar el recurso real, pasa `src`
  * (y `alt`): la proporción se mantiene y el layout no cambia.
+ *
+ * - `suave`: la imagen es una ilustración de trazo suave, no pixel art; se
+ *   escala con suavizado en lugar de `image-rendering: pixelated`.
+ * - `prioritaria`: la imagen se ve al abrir la página (p. ej. el key art del
+ *   inicio); se carga de inmediato y con prioridad alta en lugar de en diferido.
  */
 export function MediaSlot({
   ratio,
@@ -75,6 +80,8 @@ export function MediaSlot({
   className = '',
   size = 'md',
   quiet = false,
+  suave = false,
+  prioritaria = false,
 }: {
   ratio: Ratio
   label: string
@@ -83,11 +90,19 @@ export function MediaSlot({
   className?: string
   size?: 'sm' | 'md'
   quiet?: boolean
+  suave?: boolean
+  prioritaria?: boolean
 }) {
   return (
     <div className={`relative overflow-hidden border border-slate-700 bg-obsidian-900 ${className}`} style={{ aspectRatio: ratio }}>
       {src ? (
-        <img src={src} alt={alt ?? label} loading="lazy" className="pixelated absolute inset-0 size-full object-cover" />
+        <img
+          src={src}
+          alt={alt ?? label}
+          loading={prioritaria ? 'eager' : 'lazy'}
+          fetchPriority={prioritaria ? 'high' : undefined}
+          className={`${suave ? '[image-rendering:auto]' : 'pixelated'} absolute inset-0 size-full object-cover`}
+        />
       ) : quiet ? (
         <div role="img" aria-label={`${alt ?? label}. Recurso oficial pendiente.`} className="absolute bottom-4 left-5 text-left">
           <span className="label-px block text-[0.625rem] text-cream-200/85">{label}</span>
