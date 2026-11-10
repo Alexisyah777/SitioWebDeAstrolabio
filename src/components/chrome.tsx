@@ -104,7 +104,8 @@ export function Loader({ onDone }: { onDone: () => void }) {
       className={`fixed inset-0 z-[100] flex flex-col items-center justify-center gap-8 bg-bg px-6 transition-opacity duration-500 ${leaving ? 'pointer-events-none opacity-0' : 'opacity-100'}`}
     >
       <p className="logo text-2xl md:text-4xl">ASTROLABIO</p>
-      <MediaSlot ratio="1/1" label="Personaje principal" size="sm" className="w-36 md:w-44" />
+      {/* Mismo key art que el inicio, recortado al centro (torre y Almanaque XII). alt vacío: es decorativa, el estado ya lo anuncia aria-label. */}
+      <MediaSlot ratio="1/1" label="Key art" src="/key-art.jpg" alt="" size="sm" className="w-36 md:w-44" suave prioritaria />
       <div className="w-full max-w-xs">
         <div className="label-px flex justify-between text-[0.625rem] text-sand-300">
           <span>
