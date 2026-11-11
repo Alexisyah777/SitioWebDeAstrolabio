@@ -27,10 +27,11 @@ export default defineConfig({
 function pwa() {
   return VitePWA({
     registerType: 'autoUpdate',
-    includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
+    includeAssets: ['favicon.svg', 'apple-touch-icon.png', 'key-art.jpg', 'icono-192.png', 'icono-512.png'],
     manifest: {
       name: 'ASTROLABIO',
       short_name: 'ASTROLABIO',
+      id: '/',
       // Igual que la meta "description" de index.html.
       description:
         'Explora la historia, el mundo, los personajes y las mecánicas de ASTROLABIO, un juego de plataformas 2D en pixel art, y descubre su tráiler.',
@@ -41,25 +42,27 @@ function pwa() {
       background_color: COLOR_FONDO,
       theme_color: COLOR_FONDO,
       icons: [
-        { src: '/icono-192.png', sizes: '192x192', type: 'image/png' },
-        { src: '/icono-512.png', sizes: '512x512', type: 'image/png' },
+        { src: '/icono-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
+        { src: '/icono-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
         { src: '/icono-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
       ],
     },
     workbox: {
+      globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg,webp,webmanifest}'],
+      maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
       // /api/* lo atiende la API (rewrite de vercel.json), nunca el index.html guardado.
       navigateFallbackDenylist: [/^\/api\//],
       runtimeCaching: [
         {
           // Primero la red; si tarda o falla (sin conexión, arranque en frío, Supabase
           // pausado), la última respuesta guardada. Es el equivalente a Room en Android.
-          urlPattern: ({ url, sameOrigin }) => sameOrigin && url.pathname.startsWith('/api/v1/'),
+          urlPattern: ({ url }) => url.pathname.startsWith('/api/v1/'),
           handler: 'NetworkFirst',
           options: {
             cacheName: 'astrolabio-api',
             networkTimeoutSeconds: 8,
             expiration: { maxEntries: 100, maxAgeSeconds: 30 * DIA },
-            cacheableResponse: { statuses: [200] },
+            cacheableResponse: { statuses: [0, 200] },
             plugins: [
               {
                 // Un 500 de la API también usa lo guardado en vez de mostrar el error.
@@ -72,12 +75,15 @@ function pwa() {
           },
         },
         {
-          // Imágenes públicas de Supabase Storage: no cambian de URL, se guardan al verlas.
-          urlPattern: ({ url }) => url.hostname.endsWith('.supabase.co') && url.pathname.startsWith('/storage/v1/object/public/'),
+          // Imágenes (locales y remotas: Supabase Storage, CDN, etc.): se guardan al verlas
+          // y se sirven CacheFirst para soporte offline completo y carga inmediata.
+          urlPattern: ({ request, url }) =>
+            request.destination === 'image' ||
+            /\.(?:png|jpg|jpeg|svg|webp|gif|avif)(?:\?.*)?$/i.test(url.pathname),
           handler: 'CacheFirst',
           options: {
             cacheName: 'astrolabio-imagenes',
-            expiration: { maxEntries: 200, maxAgeSeconds: 30 * DIA },
+            expiration: { maxEntries: 250, maxAgeSeconds: 30 * DIA },
             cacheableResponse: { statuses: [0, 200] },
           },
         },
@@ -96,6 +102,10 @@ function pwa() {
           },
         },
       ],
+    },
+    devOptions: {
+      enabled: true,
+      navigateFallback: 'index.html',
     },
   })
 }

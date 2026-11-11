@@ -134,10 +134,10 @@ export function Navbar({ menuOpen, onMenu }: { menuOpen: boolean; onMenu: () => 
   return (
     <header
       className={`fixed inset-x-0 top-0 z-40 border-b transition-[background-color,padding,border-color] duration-300 ${
-        compact ? 'border-slate-700/70 bg-bg/80 py-2.5 backdrop-blur-md' : 'border-transparent py-4 md:py-6'
+        compact ? 'border-slate-700/70 bg-bg/80 py-2.5 backdrop-blur-md' : 'border-transparent py-3 sm:py-4 md:py-6'
       }`}
     >
-      <nav aria-label="Principal" className="mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-5 md:px-10">
+      <nav aria-label="Principal" className="mx-auto flex max-w-[1440px] items-center justify-between gap-3 px-4 sm:gap-4 sm:px-5 md:px-10">
         <a
           href="#inicio"
           aria-label="ASTROLABIO, volver al inicio"
@@ -145,17 +145,23 @@ export function Navbar({ menuOpen, onMenu }: { menuOpen: boolean; onMenu: () => 
             e.preventDefault()
             scrollToId('inicio')
           }}
-          className={`logo transition-[font-size] duration-300 ${compact ? 'text-sm md:text-base' : 'text-sm md:text-xl'}`}
+          className={`logo shrink-0 transition-[font-size] duration-300 ${compact ? 'text-[0.55rem] min-[360px]:text-xs sm:text-sm md:text-base' : 'text-[0.55rem] min-[360px]:text-xs sm:text-sm md:text-xl'}`}
         >
           ASTROLABIO
         </a>
-        <div className="flex items-center gap-3">
-          <button type="button" className="btn btn-primary !px-2 !py-1.5 !text-[0.6rem] sm:!px-4 sm:!py-3 sm:!text-xs" onClick={playTrailer}>
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+          <button type="button" className="btn btn-primary px-2.5 py-2 text-[0.55rem] sm:px-4 sm:py-3 sm:text-xs" aria-label="Ver tráiler" onClick={playTrailer}>
             <Pix name="play" className="h-2.5 w-1.5 sm:h-3.5 sm:w-2.5" />
-            Ver tráiler
+            <span className="hidden sm:inline">Ver tráiler</span>
           </button>
-          <button type="button" className="btn btn-ghost" aria-expanded={menuOpen} aria-controls="menu-overlay" onClick={onMenu}>
-            <Pix name="menu" className="h-3 w-4" />
+          <button
+            type="button"
+            className="btn btn-ghost px-2.5 py-2 text-[0.55rem] sm:px-4 sm:py-3 sm:text-xs"
+            aria-expanded={menuOpen}
+            aria-controls="menu-overlay"
+            onClick={onMenu}
+          >
+            <Pix name="menu" className="h-2.5 w-3.5 sm:h-3 sm:w-4" />
             Menú
           </button>
         </div>

@@ -12,7 +12,7 @@ export default function App() {
     <>
       <Starfield />
       {!loaded && <Loader onDone={() => setLoaded(true)} />}
-      <a href="#contenido" className="label-px fixed left-3 top-3 z-[70] -translate-y-[200%] bg-ambar-400 px-3 py-2 text-bg focus:translate-y-0">
+      <a href="#contenido" className="label-px fixed left-3 top-3 z-[70] hidden -translate-y-[200%] bg-ambar-400 px-3 py-2 text-bg focus:translate-y-0 md:block">
         Saltar al contenido
       </a>
       <Navbar menuOpen={menu} onMenu={() => setMenu(true)} />

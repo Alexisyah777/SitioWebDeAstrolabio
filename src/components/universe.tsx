@@ -7,7 +7,7 @@ import {
   type Personaje,
   type PersonajeResumen,
 } from '../api'
-import { CREDITS, SECTIONS, SOCIALS } from '../content'
+import { SECTIONS } from '../content'
 import { prefersReducedMotion, scrollToId } from '../lib'
 import { Dialogo, EstadoCarga, MediaSlot, Pix, Reveal, SectionHeader, type IconName } from './ui'
 
@@ -326,7 +326,7 @@ function ArchivoModal({ slug, onClose }: { slug: string; onClose: () => void }) 
 export function Footer() {
   return (
     <footer className="relative border-t border-slate-700 bg-black/50 pb-10 pt-16">
-      <div className="wrap grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
+      <div className="wrap flex flex-col justify-between gap-12 sm:flex-row">
         <div>
           <p className="logo text-xl md:text-2xl">ASTROLABIO</p>
           <p className="mt-5 font-display text-2xl uppercase text-sand-300">Cada secreto, a su tiempo.</p>
@@ -334,7 +334,7 @@ export function Footer() {
         </div>
         <nav aria-label="Secciones del pie">
           <p className="label-px text-[0.625rem] text-sand-300">Índice</p>
-          <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2">
+          <ul className="mt-4 grid grid-cols-2 gap-x-8 gap-y-2.5">
             {SECTIONS.map((s) => (
               <li key={s.id}>
                 <a
@@ -351,24 +351,6 @@ export function Footer() {
             ))}
           </ul>
         </nav>
-        <div>
-          <p className="label-px text-[0.625rem] text-sand-300">Señales</p>
-          <ul className="mt-4 flex gap-3">
-            {SOCIALS.map((s) => (
-              <li key={s}>
-                <a
-                  href="#"
-                  onClick={(e) => e.preventDefault()}
-                  aria-label={`${s} (enlace pendiente)`}
-                  className="flex size-10 items-center justify-center border border-slate-700 bg-obsidian-900 text-sand-300 shadow-[3px_3px_0_#000] transition-[transform,box-shadow] [transition-timing-function:steps(2)] hover:translate-x-[2px] hover:translate-y-[2px] hover:text-ambar-400 hover:shadow-[1px_1px_0_#000]"
-                >
-                  <Pix name="social" className="size-4" />
-                </a>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-6 text-sm text-white">{CREDITS}</p>
-        </div>
       </div>
       <div className="wrap label-px mt-14 flex flex-wrap justify-between gap-3 border-t border-slate-700 pt-6 text-[0.5625rem] text-cream-200/65">
         <span>© {new Date().getFullYear()} ASTROLABIO</span>
